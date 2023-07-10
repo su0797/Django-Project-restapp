@@ -98,13 +98,18 @@ class ProfileWrite(APIView):
 
 class ProfileUpdate(APIView):
     def get(self, request):
-        user = request.data.get('user')
-        image = request.data.get('image')
-        age = request.data.get('age')
-        
-        pass # url로 이동
-    def post():
-        pass
+        profile = Profile.objects.get(user=request.user)
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+
+
+    def post():        
+        profile = Profile.objects.create(user=user, image=image, age=age)
+        serializer = ProfileSerializer(profile)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
