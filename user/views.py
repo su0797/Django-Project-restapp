@@ -97,7 +97,11 @@ class ProfileWrite(APIView):
 
 
 class ProfileUpdate(APIView):
-    def get():
+    def get(self, request):
+        user = request.data.get('user')
+        image = request.data.get('image')
+        age = request.data.get('age')
+        
         pass # url로 이동
     def post():
         pass

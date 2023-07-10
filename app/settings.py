@@ -133,7 +133,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ko-kr'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Seoul'
 
@@ -142,8 +142,8 @@ USE_I18N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ('kr', 'Korean'),
-    ('en', 'English')
+    ('en', 'English'),
+    ('kr', 'Korean')
 ]
 
 
