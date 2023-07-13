@@ -33,7 +33,10 @@ class Registration(View):
         if form.is_valid():
             user = form.save()
             return redirect('user:login')
-
+        context = {
+            'form': form
+        }
+        return render(request, 'user/user_register.html', context)
 
 ### Login
 class Login(View):
@@ -76,12 +79,11 @@ class Logout(View):
     def get(self, request):
         logout(request)
         return redirect('blog:list')
-    
+
 
 ### Profile
 # 조회, 쓰기
 # 수정, 삭제
-
 class ProfileWrite(APIView):
     # def get():
     #     pass # url로 이동
@@ -101,20 +103,19 @@ class ProfileUpdate(APIView):
         profile = Profile.objects.get(user=request.user)
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
-
-
-    def post():        
-        profile = Profile.objects.create(user=user, image=image, age=age)
-        serializer = ProfileSerializer(profile)
+    
+    def post(self, request):
+        profile = Profile.objects.get(user=request.user)
+        serializer = ProfileSerializer(profile, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class ProfileDelete(APIView):
     def post(self, request):
         # profile - user
         profile = Profile.objects.get(user=request.user)
-        pass
+        profile.delete()
+        return Response({'msg': 'Profile deleted'}, status=status.HTTP_200_OK)
