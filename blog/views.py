@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.throttling import UserRateThrottle
-from .models import Post
+from .models import Post, Comment, HashTag
 from .forms import PostForm
 from .serializers import PostSerializer, CommentSerializer, HashTagSerializer
 
