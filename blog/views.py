@@ -1,7 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.throttling import UserRateThrottle
 from .models import Post, Comment, HashTag
 from .forms import PostForm
 from .serializers import PostSerializer, CommentSerializer, HashTagSerializer
@@ -10,8 +9,6 @@ from .serializers import PostSerializer, CommentSerializer, HashTagSerializer
 ### Post
 class Index(APIView):
     
-    Throttle_classes = [UserRateThrottle]
-    
     def get(self, request):
         posts = Post.objects.all()
         serialized_posts = PostSerializer(posts, many=True)# 직렬화
@@ -19,9 +16,7 @@ class Index(APIView):
 
 
 class Write(APIView):
-    
-    Throttle_classes = [UserRateThrottle]
-    
+        
     def post(self, request):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
@@ -79,8 +74,6 @@ class DetailView(APIView):
 ### Comment
 class CommentWrite(APIView):
     
-    Throttle_classes = [UserRateThrottle]
-    
     def post(self, request, pk):
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
@@ -99,8 +92,6 @@ class CommentDelete(APIView):
 
 ### HashTag
 class HashTagWrite(APIView):
-    
-    Throttle_classes = [UserRateThrottle]
     
     def post(self, request, pk):
         serializer = HashTagSerializer(data=request.data)
